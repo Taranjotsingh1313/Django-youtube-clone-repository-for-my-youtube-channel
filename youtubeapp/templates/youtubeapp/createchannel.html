@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+    {% load static %}
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <title>CREATE CHANEL</title>
+  </head>
+  <body>
+      {% include 'youtubeapp/navbar.html' %}
+    <h1  class="text-center text-primary">CREATE CHANNEL </h1>
+    <h1 id="yt" class="text-primary text-center"></h1>
+    <form class="container" action="{% url 'create_channel' %}" method="POST">
+      {% csrf_token %}
+  <div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label">Channel Name</label>
+    <input type="text"  class="form-control" id="channelname" aria-describedby="emailHelp">
+
+  </div>
+  <div class="mb-3">
+    <label for="exampleInputPassword1" class="form-label">Channel Image</label>
+    <input type="file" class="form-control" id="file">
+  </div>
+  <button type="submit" class="btn btn-primary">Create</button>
+</form>
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
+    -->
+    <script>
+      const form = document.querySelector("form");
+      form.addEventListener('submit',(e) =>{
+        e.preventDefault()
+        const newform = new FormData()
+        const file = document.getElementById("file").files[0];
+        const channelname = document.getElementById("channelname").value;
+        const csrf = document.getElementsByName("csrfmiddlewaretoken")[0].value;
+        newform.append('csrfmiddlewaretoken',csrf)
+        newform.append('file',file)
+        newform.append('channelname',channelname)
+        fetch('{% url "create_channel" %}',{
+          method:'POST',
+          body:newform
+
+        }).then(data => data.json()).then(txt =>{
+          const yt = document.getElementById("yt");
+          yt.innerHTML = "NOW YOU ARE A YOUTHOOBER"
+        })
+      })
+    </script>
+  </body>
+</html>

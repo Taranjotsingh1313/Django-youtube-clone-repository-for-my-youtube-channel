@@ -1,4 +1,4 @@
-from django.http.response import HttpResponse
+from django.http import JsonResponse
 from django.shortcuts import render,redirect
 from django.contrib import messages
 from django.contrib.auth.models import User
@@ -50,8 +50,22 @@ def youtuber(request):
     if not check:
         youtuber = Youtuber.objects.create(youtuber=request.user)
         if youtuber:
-            return redirect("uploadvideo")
+            return redirect("create_channel")
     else:
         return redirect("index")
 
     return HttpResponse("YOUTUHOOBER CREATED")
+
+def create_channel(request):
+    if request.method == 'POST':
+        file = request.FILES['file']
+        channelname = request.POST['channelname']
+        youtuber = Youtuber.objects.filter(youtuber=request.user).update(channel_name=channelname,youtubeimage=file)
+        if youtuber:
+            return JsonResponse({
+                'success':True
+            })
+    return render(request,'youtubeapp/createchannel.html')
+
+def channel(request):
+    return render(request,'youtubeapp/channel.html')
