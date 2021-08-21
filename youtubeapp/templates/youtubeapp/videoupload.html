@@ -28,12 +28,17 @@
   </head>
   <body>
     {% include 'youtubeapp/navbar.html' %}
+    {% if uploaded == True %}
+    <h1> Video Uploaded Bro 😎</h1>
+    {% endif %}
     <h1 class="text-center my-2">Youtube Video Upload | CodeWithSingh</h1>
-    <form class="container">
+    <form class="container" method="POST" action="" enctype="multipart/form-data">
+    {% csrf_token %}
       <div class="mb-3">
         <label for="exampleInputEmail1" class="form-label">Video Title</label>
         <input
           type="text"
+          name="videoTitle"
           class="form-control"
           id="exampleInputEmail1"
           aria-describedby="emailHelp"
@@ -41,13 +46,13 @@
       </div>
       <div class="mb-3">
         <label for="exampleInputPassword1" class="form-label">Video</label>
-        <input type="file" class="form-control" id="exampleInputPassword1" />
+        <input type="file" name="video" class="form-control" id="exampleInputPassword1" />
       </div>
       <div class="mb-3">
         <label for="exampleInputPassword1" class="form-label"
           >Video Thumbnail</label
         >
-        <input type="file" class="form-control" id="exampleInputPassword1" />
+        <input type="file" name="thumbnail" class="form-control" id="exampleInputPassword1" />
       </div>
 
       <div class="mb-3">
@@ -59,6 +64,7 @@
           class="form-control"
           id="exampleFormControlTextarea1"
           rows="3"
+          name="description"
         ></textarea>
       </div>
       <button type="submit" class="btn btn-primary">Upload</button>

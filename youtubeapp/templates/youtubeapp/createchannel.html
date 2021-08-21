@@ -57,8 +57,10 @@
         }).then(data => data.json()).then(txt =>{
           const yt = document.getElementById("yt");
           yt.innerHTML = "NOW YOU ARE A YOUTHOOBER"
-        })
+          window.location.href = `http://127.0.0.1:8000/${txt.link}`
+        
       })
+    })
     </script>
   </body>
 </html>

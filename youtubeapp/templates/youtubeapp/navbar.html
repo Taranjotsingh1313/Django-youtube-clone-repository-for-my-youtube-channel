@@ -98,6 +98,8 @@
     </button>
   </div>
   <div class="third">
+      {% if success%}
+      <a href="{% url 'uploadvideo' %}">
     <svg
       viewBox="0 0 24 24"
       preserveAspectRatio="xMidYMid meet"
@@ -111,8 +113,9 @@
           class="style-scope yt-icon"
         ></path>
       </g>
-    </svg>
-
+    </svg> 
+    </a>
+{%endif%}
     <svg
       viewBox="0 0 24 24"
       preserveAspectRatio="xMidYMid meet"
@@ -128,7 +131,7 @@
       </g>
     </svg>
     <img
-      src="{% static 'images/fae862fff4f6100d000a1c01c4030db0.jpg' %}"
+      src="{% static 'images/img.jpg' %}"
       alt=""
       class="channel"
       id="drop"
