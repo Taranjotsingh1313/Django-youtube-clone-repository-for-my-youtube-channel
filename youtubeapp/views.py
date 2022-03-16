@@ -1,4 +1,5 @@
 from django.http import JsonResponse
+from django.http.response import HttpResponseRedirect
 from django.shortcuts import render,redirect,HttpResponse
 from django.contrib import messages
 from django.contrib.auth.models import User
@@ -7,10 +8,16 @@ from .models import Video, Youtuber
 # Create your views here.
 def index(request):
     context = {}
+    a = False
     if request.user.is_authenticated:
         youtuber  = Youtuber.objects.filter(youtuber=request.user)
         if youtuber:
-            context = {"success":"hai"}
+            a = True
+    videos = Video.objects.all()
+    if a == True:
+        context = {'videos':videos,'success':"Hai"}
+    else:
+        context = {'videos':videos}
     return render(request,'youtubeapp/index.html',context)
 
 def signup(request):
@@ -59,12 +66,29 @@ def videoupload(request):
             if video:
                 context = {'uploaded':True}
     return render(request,'youtubeapp/videoupload.html',context)
-
-def video(request):
+'''VIDEO VIEW FUNCTION HERE'''
+def video(request,id):
+    # LOGIC FOR VIEW FUNCTIONALITIES
+    views = 0
+    video = Video.objects.filter(id=id)[0]
+    views = video.Views + 1
+    video_up = Video.objects.filter(id=id).update(Views=views)
+    '''LOGIC FOR VIEW FUNCTIONLITY ENDS HERE'''
+    a = False
+    yes = False
     context ={}
     youtuber = Youtuber.objects.filter(youtuber=request.user)
     if youtuber:
         context = {"success":"hai"}
+        a = True
+    video = Video.objects.get(id=id)
+    video_youtuber = video.youtuber_video.subscribers.all()
+    if request.user in video_youtuber:
+        yes = True
+    if a == True:
+        context = {"success":"hai",'video':video,'yes':yes}
+    else:
+        context = {'video':video,'yes':yes}
     return render(request,'youtubeapp/video.html',context)
 
 # CREATE USER A YOUTUBER FUNCTION
@@ -78,7 +102,7 @@ def youtuber(request):
         return redirect("index")
 
     return HttpResponse("YOUTUHOOBER CREATED")
-
+'''USER CREATE YOUTUBE CHANNEL FUNCTION HERE'''
 def create_channel(request):
     if request.method == 'POST':
         file = request.FILES['file']
@@ -94,10 +118,31 @@ def create_channel(request):
     if youtuber:
         context = {"success":"hai"}
     return render(request,'youtubeapp/createchannel.html',context)
-
+'''CHANNEL FUNCTION HERE'''
 def channel(request):
     context ={}
     youtuber = Youtuber.objects.filter(youtuber=request.user)
+    print(youtuber)
+    videos = Video.objects.filter(youtuber_video=youtuber[0])
+    print(videos)
     if youtuber:
-        context = {"success":"hai"}
+        context = {"success":"hai",'videos':videos}
     return render(request,'youtubeapp/channel.html',context)
+    
+'''SUBSCRIBE TO THE CHANNEL VIEW'''
+def subscribe(request,id):
+    video = Video.objects.get(id=id)
+    subscribeto = video.youtuber_video.youtuber
+    # subscribeto = video.youtuber_video.subscribers.add(request.user)
+    youtuber = Youtuber.objects.get(youtuber=subscribeto)
+    youtuber.subscribers.add(request.user)
+    print(youtuber.subscribers.all())
+    # return HttpResponseRedirect(f'/video/{id}')
+    return HttpResponse(youtuber)
+    
+'''VIEW FOR THE ANY YOUTUBER CHANNEL'''
+def anychannel(request,id):
+    youtuber = Youtuber.objects.get(id=id)
+    videos = Video.objects.filter(youtuber_video=youtuber)
+    context = {'youtuber':youtuber,'videos':videos}
+    return render(request,'youtubeapp/anychannel.html',context)

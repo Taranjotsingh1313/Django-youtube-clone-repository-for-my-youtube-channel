@@ -14,7 +14,7 @@
       crossorigin="anonymous"
     />
 
-    <title>{{user}} | Channel</title>
+    <title> {{youtuber.channel_name}}</title>
     <style>
       body {
         overflow-x: hidden;
@@ -27,15 +27,9 @@
   </head>
   <body>
     {% include 'youtubeapp/navbar.html' %}
-    <h1 class="text-center text-primary">{{user|capfirst}} 's Channel</h1>
+    <h1 class="text-center text-primary">{{youtuber.channel_name}}</h1>
 
-    <!-- <div class="row container text-center">
-        <div class="col-sm">
-       <img src="{{youtuber.youtubeimage.url}}" class="mx-2" alt="" srcset="" width="50">
-        
-        </div>
-        <div class="col-sm"><h3 class="text-primary">channel Name</h3></div>
-    </div> -->
+ 
     <div class="videos my-3">
       <div class="row">
           <!-- for loop pagal yaha laga de -->

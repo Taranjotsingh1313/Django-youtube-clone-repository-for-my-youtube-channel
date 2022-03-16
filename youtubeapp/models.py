@@ -13,3 +13,4 @@ class Video(models.Model):
     video_title = models.CharField(max_length=255)
     video_desc = models.TextField()
     video = models.FileField(upload_to="videos")
+    Views = models.IntegerField(null=True,blank=True,default=0)

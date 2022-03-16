@@ -148,7 +148,9 @@ svg {
 .row .col-sm .thumbnail {
   width: 15rem;
 }
-
+.thumbnail{
+  width: 15rem;
+}
 .row .col-sm .channel-name-title {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -156,19 +158,41 @@ svg {
   font-family: "Roboto";
   font-weight: 400;
 }
-
+.channel-name-title{
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  font-family: "Roboto";
+  font-weight: 400;
+}
 .row .col-sm .channel-name-title img {
   width: 2rem;
   height: 2rem;
   border-radius: 50%;
 }
-
+.channel-name-title img {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+}
+ .title{
+    font-size: 1rem;
+  margin-left: 0.5rem;
+  padding-right: 65px;
+ }
 .row .col-sm .channel-name-title .title {
   font-size: 1rem;
   margin-left: 0.5rem;
   padding-right: 65px;
 }
-
+.channel-name{
+  margin-top: 0.5rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 0px 35px;
+  color: black;
+}
 .row .col-sm .channel-name {
   margin-top: 0.5rem;
   display: -webkit-box;
@@ -183,7 +207,11 @@ svg {
   font-family: "Roboto";
   font-weight: 900;
 }
-
+.channel-tile{
+  font-size: 0.9rem;
+  font-family: "Roboto";
+  font-weight: 900;
+}
 .row .col-sm .channel-name .views {
   margin-left: 2rem;
   font-family: "Roboto";
@@ -196,9 +224,9 @@ svg {
   justify-content: center;
   align-items: center;
 }
-li{
+/* li{
   /* list-style: none; */
-}
+
 .dropdown{
   display: none;
   width: 15vw;

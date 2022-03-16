@@ -1,24 +1,76 @@
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{video.video_title|capfirst}}| Youtube Clone</title>
     <link rel="stylesheet" href="{% static 'css/index.css' %}" />
     <link rel="stylesheet" href="{% static 'css/video.css' %}" />
-</head>
-<body>
+  </head>
+  <body>
     {% include 'youtubeapp/navbar.html' %}
     <div class="row-2">
-        <div class="width-1">
-            <div class="video">
-                <video controls  src="{% static 'images/video.mp4' %}"></video>
+      <div class="width-1 flex">
+        <div class="video">
+          <video autoplay controls src="{{video.video.url}}"></video>
+          <div class="channel_info">
+            <div class="views_title">
+              <h2 class="text-primary">{{video.video_title}}</h2>
+              <h6 class="view">{{video.Views}} views</h6>
             </div>
-        </div>
-        <div class="width-1"></div>
+            <div class="channel_name_img">
+              <img
+                src="{{video.youtuber_video.youtubeimage.url}}"
+                alt=""
+                class="logo"
+              />
+              <a href="{% url 'user_channel' video.youtuber_video.id %}"
+                >{{video.youtuber_video.channel_name}}</a
+              >
+              {% if yes == True %}
+              <button disabled id="subs_not">Subscribed</button>
+              {% else %}
+              <a href="{% url 'subscribe' video.id %}" id="subs">Subscribe</a>
 
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        <div class="comment">
+          <form action="">
+            <textarea name="" id="" cols="30" rows="10"></textarea>
+            <button type="submit">Comment</button>
+          </form>
+        </div>
+      </div>
+      <div class="width-1">
+        <!-- VIDEOS  -->
+        <a href="/video">
+          <div>
+            <img
+              src="{% static 'images/img.jpg' %}"
+              alt=""
+              width="500"
+              class="thumbnail"
+            />
+            <div class="channel-name-title">
+              <img
+                src="{% static 'images/img.jpg' %}"
+                alt=""
+                class="channel-image"
+              />
+              <h3 class="title">Title of the video</h3>
+            </div>
+            <div class="channel-name">
+              <h2 class="channel-tile">Youtuber Channel Name</h2>
+              <p class="views">700k</p>
+            </div>
+          </div></a
+        >
+        <!-- VIDEO ENDS HERE -->
+      </div>
     </div>
-</body>
+  </body>
 </html>
